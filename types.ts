@@ -1,3 +1,5 @@
+type Modify<T, R> = Omit<T, keyof R> & R;
+
 export interface TMDBMovie {
     adult: boolean
     backdrop_path: string
@@ -29,6 +31,19 @@ export interface MovieRating {
     e: number
     tmdbId: number
     title: string
+}
+
+export type ApiMovieRating = Modify<MovieRating, {
+    s: string
+    e: string
+}>
+
+export interface RatingPoint {
+    label: string
+    titles: string[]
+    r: number
+    x: number
+    y: number
 }
 
 export interface PropItem {

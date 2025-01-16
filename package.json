@@ -1,0 +1,27 @@
+{
+  "name": "brendan-rates",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@formkit/tempo": "^0.1.2",
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "@pinia/nuxt": "^0.9.0",
+    "axios": "^1.7.9",
+    "lodash": "^4.17.21",
+    "nuxt": "^3.13.0",
+    "pinia": "^2.3.0",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "sass": "^1.80.4",
+    "typescript": "^5.7.3",
+    "vue-tsc": "^2.1.10"
+  }
+}

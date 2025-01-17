@@ -8,19 +8,16 @@ const { ratings } = defineProps({
 });
 
 const search = ref<string>('');
-
-watch(search, () => {
-  $emit('search', search.value);
-});
 </script>
 
 <template>
   <div class="w-full h-12">
     <bc-input
-      v-model="search"
       class="mt-4 mb-0 h-full rounded-t-lg rounded-b-none"
       :debounce="400"
       placeholder="Search Ratings..."
+      :value="search.value"
+      @update:modelValue="$emit('search', $event)"
     />
   </div>
   <div

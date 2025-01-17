@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BcInput from "~/components/bc-design-system/bc-input.vue";
-import type { PropItem } from "~/types/types";
+import type { PropItem } from "~/types";
 
 interface InternalSelectItem {
   text: string;

@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import API from './api';
-import type { AddMovieBody, ApiMovieRating, MovieRating } from "~/types/types";
+import type { AddMovieBody, ApiMovieRating, MovieRating } from "~/types";
 
 const baseURI = 'movies';
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MovieRating } from '~/types/types';
+import type { MovieRating } from '~/types';
 import BcInput from "~/components/bc-design-system/bc-input.vue";
 
 const $emit = defineEmits([ 'search' ]);
@@ -32,7 +32,6 @@ const search = ref<string>('');
     <div class="grid grid-cols-2 gap-2">
       <div class="border rounded flex justify-center items-center relative" title="Entertainment">
         <span class="text-lg font-semibold">{{ rating.e }}</span>
-        <!-- TODO - Responsiveness -->
         <div class="absolute -bottom-[.4rem] text-xs px-1 bg-slate-800">
           E
         </div>

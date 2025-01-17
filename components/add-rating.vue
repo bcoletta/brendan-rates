@@ -6,7 +6,7 @@ import BcSearchInput from "~/components/bc-design-system/bc-search-input.vue";
 import { searchTMDBMovies } from "~/services/tmdb-api";
 import { useNotificationStore } from "~/store/notifications";
 import { useUserStore } from "~/store/user";
-import type {AddMovieBody, DropdownItem, TMDBMovie, TMDBSearchResult} from "~/types/types";
+import type {AddMovieBody, DropdownItem, TMDBMovie, TMDBSearchResult} from "~/types";
 import {addMovie} from "~/services/movies";
 
 const $config = useRuntimeConfig();

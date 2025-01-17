@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { RawAxiosRequestHeaders, AxiosResponse } from 'axios';
-import type { TMDBSearchResult } from '~/types/types';
+import type { TMDBSearchResult } from '~/types';
 
 const BASE_URI: string = `https://api.themoviedb.org/3/`;
 

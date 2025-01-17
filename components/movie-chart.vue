@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Bubble from '~/components/charts/bubble.vue';
 import { useUtilStore } from "~/store/utils";
-import type { MovieRating, RatingPoint } from '~/types/types';
+import type { MovieRating, RatingPoint } from '~/types';
 import type { Chart, TooltipItem, ChartType } from "chart.js";
 
 const { ratings=[] } = defineProps({

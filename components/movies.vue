@@ -2,7 +2,7 @@
 import MovieChart from '~/components/movie-chart.vue';
 import MovieList from "~/components/movie-list.vue";
 import { useMovieStore } from '~/store/movies';
-import type { MovieRating } from '~/types/types';
+import type { MovieRating } from '~/types';
 
 const $movies = useMovieStore();
 

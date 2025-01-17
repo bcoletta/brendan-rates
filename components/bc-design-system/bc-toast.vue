@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import type { NotificationType } from "~/types/types";
+import type { NotificationType } from "~/types";
 
 const $emit = defineEmits([ 'close' ]);
 const { notification } = defineProps({

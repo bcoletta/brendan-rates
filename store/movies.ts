@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type {MovieRating, StoreGetterArgs} from '~/types';
+import type {MovieRating, StoreGetterArgs} from '~/types/types';
 import { getMovies } from '~/services/movies';
 
 export const useMovieStore = defineStore('movies', () => {

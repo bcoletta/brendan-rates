@@ -8,5 +8,8 @@ export default defineNuxtConfig({
     public: {
       tmdbToken: '',
     }
+  },
+  typescript: {
+    typeCheck: true
   }
 })

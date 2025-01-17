@@ -6,7 +6,7 @@ import BcSearchInput from "~/components/bc-design-system/bc-search-input.vue";
 import { searchTMDBMovies } from "~/services/tmdb-api";
 import { useNotificationStore } from "~/store/notifications";
 import { useUserStore } from "~/store/user";
-import type {AddMovieBody, DropdownItem, TMDBMovie, TMDBSearchResult} from "~/types";
+import type {AddMovieBody, DropdownItem, TMDBMovie, TMDBSearchResult} from "~/types/types";
 import {addMovie} from "~/services/movies";
 
 const $config = useRuntimeConfig();
@@ -58,11 +58,11 @@ const submit = (): void => {
 
   const payload: AddMovieBody = {
     password: $user.password,
-    title: title.value,
-    tmdbId: tmdbId.value,
-    e: entertainment.value,
-    s: story.value,
-    date: format(dateWatched.value, 'M/DD/YYYY'),
+    title: title.value || '',
+    tmdbId: tmdbId.value || -1,
+    e: entertainment.value || 0,
+    s: story.value || 0,
+    date: format(dateWatched.value || new Date(), 'M/DD/YYYY'),
     review: review.value,
   }
 

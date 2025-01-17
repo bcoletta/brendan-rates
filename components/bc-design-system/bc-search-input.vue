@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { debounce } from 'lodash';
-import type { DropdownItem } from "~/types";
+import type { DropdownItem } from "~/types/types";
 import BcInput from "~/components/bc-design-system/bc-input.vue";
 
 const emit = defineEmits([ 'select', 'select:value', 'update:search' ]);
@@ -15,7 +15,10 @@ const props = defineProps({
     type: String,
     default: 'Search...',
   },
-  searchFunction: Function,
+  searchFunction: {
+    type: Function,
+    default: () => {},
+  },
   value: [String,Number],
 });
 
@@ -42,7 +45,10 @@ const setInputFocused = (state:boolean=false): void => {
 }
 
 const setDropdownPosition = (): void => {
-  const dropdownMenuEl: HTMLDivElement = dropdownMenu.value;
+  const dropdownMenuEl: HTMLDivElement = dropdownMenu.value as HTMLDivElement;
+
+  if (!input.value) return;
+  
   const inputEl: HTMLDivElement = input.value.$el;
   const inputElPos: DOMRect = inputEl.getBoundingClientRect();
 

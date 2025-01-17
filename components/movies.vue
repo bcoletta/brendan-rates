@@ -2,11 +2,9 @@
 import MovieChart from '~/components/movie-chart.vue';
 import MovieList from "~/components/movie-list.vue";
 import { useMovieStore } from '~/store/movies';
-import { useUtilStore } from "~/store/utils";
-import type { MovieRating } from '~/types';
+import type { MovieRating } from '~/types/types';
 
 const $movies = useMovieStore();
-const $utils = useUtilStore();
 
 const movieRatings = ref<MovieRating[]>([]);
 const sort = 'date';

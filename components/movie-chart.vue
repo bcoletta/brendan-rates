@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import Bubble from '~/components/charts/bubble.vue';
 import { useUtilStore } from "~/store/utils";
-import type {MovieRating, RatingPoint} from '~/types';
+import type { MovieRating, RatingPoint } from '~/types/types';
+import type { Chart, TooltipItem, ChartType } from "chart.js";
 
-const { ratings } = defineProps({
+const { ratings=[] } = defineProps({
   ratings: Array as PropType<MovieRating[]>
 });
 
@@ -69,7 +70,6 @@ const axisOptions = (label:string) => {
   }
 };
 
-// TODO - Typing
 const chartOptions = computed(() => ({
   aspectRatio: 1,
   maintainAspectRatio: true,
@@ -86,7 +86,7 @@ const chartOptions = computed(() => ({
       displayColors: false,
       enabled: true,
       callbacks: {
-        label: tooltipItem => {
+        label: (tooltipItem: TooltipItem<ChartType>) => {
           return points.value[tooltipItem.dataIndex].titles;
         },
       },

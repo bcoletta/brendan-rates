@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BcInput from "~/components/bc-design-system/bc-input.vue";
-import type { PropItem } from "~/types";
+import type { PropItem } from "~/types/types";
 
 interface InternalSelectItem {
   text: string;
@@ -10,16 +10,19 @@ interface InternalSelectItem {
 const attrs = useAttrs();
 const emit = defineEmits([ 'update:modelValue' ]);
 const props = defineProps({
-  items: Array,
+  items: {
+    type: Array as PropType<PropItem[]>,
+    default: [],
+  },
 });
 
 const internalItems = computed((): InternalSelectItem[] => {
-  return props.items.map((item:PropItem|string|number) => {
+  return props.items.map((item:PropItem|string|number): InternalSelectItem => {
     if (typeof item === 'object') {
-      if (!Object.hasOwn(item, 'value')) return { text: '', value: undefined };
+      if (!Object.hasOwn(item, 'value')) return { text: '', value: -1 };
 
-      let returnObj: PropItem = { text: '', value: item.value };
-      returnObj.text = Object.hasOwn(item, 'text') ? item.text : <string>item.value;
+      let returnObj: InternalSelectItem = { text: '', value: item.value };
+      returnObj.text = Object.hasOwn(item, 'text') ? <string>item.text : <string>item.value;
       return returnObj;
     } else {
       return { text: <string>item, value: item };

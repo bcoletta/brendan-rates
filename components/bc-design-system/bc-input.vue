@@ -23,9 +23,9 @@ const internalLabelClass = computed<string>(() => {
   return `${props.bgColor} ${props.labelClass}`;
 });
 
-const placeholder = computed((): string|null => {
-  if (props.placeholder === false) return null;
-  else if (props.placeholder) return props.placeholder;
+const placeholder = computed((): string|undefined => {
+  if (props.placeholder === false) return undefined;
+  else if (props.placeholder) return <string>props.placeholder;
   else if (props.label) return `Enter ${props.label}...`;
   else return 'Enter value...';
 });
@@ -51,7 +51,7 @@ const input = _debounce((val:string) => {
           :value="attrs.modelValue"
           @blur="$emit('blur', $event)"
           @focus="$emit('focus', $event)"
-          @input="input($event.target.value)"
+          @input="input(($event.target as HTMLInputElement).value)"
       />
     </slot>
   </div>

@@ -11,14 +11,16 @@ const invalidPassword = ref<boolean>(false);
 const password = ref<string>();
 
 const checkPassword = (): void => {
-  validateUser(password.value)
-      .then((valid:boolean) => {
-        if (valid) {
-          $user.setPassword(password.value);
-        }
-        authenticated.value = valid;
-        invalidPassword.value = !valid;
-      });
+  const pw: string = password.value || '';
+
+  validateUser(pw)
+    .then((valid:boolean) => {
+      if (valid) {
+        $user.setPassword(pw);
+      }
+      authenticated.value = valid;
+      invalidPassword.value = !valid;
+    });
 }
 </script>
 

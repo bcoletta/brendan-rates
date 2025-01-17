@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MovieRating } from '~/types';
+import type { MovieRating } from '~/types/types';
 import BcInput from "~/components/bc-design-system/bc-input.vue";
 
 const $emit = defineEmits([ 'search' ]);
@@ -16,7 +16,7 @@ const search = ref<string>('');
       class="mt-4 mb-0 h-full rounded-t-lg rounded-b-none"
       :debounce="400"
       placeholder="Search Ratings..."
-      :value="search.value"
+      :value="search"
       @update:modelValue="$emit('search', $event)"
     />
   </div>

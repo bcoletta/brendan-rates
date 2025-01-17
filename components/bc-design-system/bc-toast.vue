@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import type { NotificationType } from "~/types";
+import type { NotificationType } from "~/types/types";
 
 const $emit = defineEmits([ 'close' ]);
 const { notification } = defineProps({
-  notification: Object as PropType<NotificationType>,
+  notification: {
+    type: Object as PropType<NotificationType>,
+    default: { message: '' },
+  },
 });
 
 const $router = useRouter();
@@ -31,6 +34,7 @@ const onClick = () => {
 
 <template>
 <div
+  v-if="notification"
   class="p-2 mb-2 rounded border border-slate-500 shadow-md"
   :class="notificationClass"
   @click="onClick"

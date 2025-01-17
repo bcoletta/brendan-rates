@@ -30,14 +30,16 @@ const search = ref<string>('');
       <div class="text-sm">{{ rating.date }}</div>
     </div>
     <div class="grid grid-cols-2 gap-2">
-      <div class="border rounded flex justify-center items-center relative">
+      <div class="border rounded flex justify-center items-center relative" title="Entertainment">
         <span class="text-lg font-semibold">{{ rating.e }}</span>
         <!-- TODO - Responsiveness -->
-        <div class="absolute -bottom-[.4rem] text-xs px-1 bg-slate-800">Entertainment</div>
+        <div class="absolute -bottom-[.4rem] text-xs px-1 bg-slate-800">
+          E
+        </div>
       </div>
-      <div class="border rounded flex justify-center items-center relative">
+      <div class="border rounded flex justify-center items-center relative" title="Story">
         <span class="text-lg font-semibold">{{ rating.s }}</span>
-        <div class="absolute -bottom-[.4rem] text-xs px-1 bg-slate-800">Story</div>
+        <div class="absolute -bottom-[.4rem] text-xs px-1 bg-slate-800">S</div>
       </div>
     </div>
   </div>

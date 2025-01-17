@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import MovieChart from '~/components/movie-chart.vue';
-import { getMovies } from '~/services/movies';
-import { useMovieStore } from '~/store/movies';
-import type { MovieRating } from '~/types';
 import MovieList from "~/components/movie-list.vue";
+import { useMovieStore } from '~/store/movies';
+import { useUtilStore } from "~/store/utils";
+import type { MovieRating } from '~/types';
 
 const $movies = useMovieStore();
+const $utils = useUtilStore();
 
 const movieRatings = ref<MovieRating[]>([]);
 const sort = 'date';
@@ -28,11 +29,12 @@ onMounted(getMovieData);
 
 <template>
   <!-- TODO - Masthead -->
-  <div v-if="hasData" class="w-fit mx-auto grid grid-cols-1 md:grid-cols-3">
-    <div class="xl:max-h-[90vh] md:col-span-2">
+  <!-- TODO - Tabs -->
+  <div v-if="hasData" class="w-fit container mx-auto grid grid-cols-1 lg:grid-cols-3">
+    <div class="xl:max-h-[90vh] lg:col-span-2">
       <movie-chart :ratings="movieRatings" />
     </div>
-    <div class="md:h-[90vh] overflow-y-auto">
+    <div class="lg:h-[90vh] overflow-y-auto">
       <movie-list :ratings="movieRatings" @search="filter" />
     </div>
   </div>

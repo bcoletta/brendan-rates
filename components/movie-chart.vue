@@ -40,7 +40,7 @@ const points = computed<RatingPoint[]>(() => {
 
 // TODO - Typing
 const chartData = computed(() => ({
-  labels: [ 'Data' ],
+  labels: [ '' ],
   datasets: [
     {
       label: 'Movie Ratings',

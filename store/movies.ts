@@ -3,6 +3,7 @@ import type {MovieRating, StoreGetterArgs} from '~/types';
 import { getMovies } from '~/services/movies';
 
 export const useMovieStore = defineStore('movies', () => {
+  const loading = ref<boolean>(false);
   const ratings = ref<MovieRating[]>([]);
 
   const filterMovieRatings = (movieRatings: MovieRating[], filter:string): MovieRating[] => {
@@ -37,11 +38,13 @@ export const useMovieStore = defineStore('movies', () => {
       return Promise.resolve(sortMovieRatings(filterMovieRatings(ratings.value, filter), sort));
     }
 
+    loading.value = true;
     return getMovies().then((mr: MovieRating[]) => {
       ratings.value = [ ...mr ];
+      loading.value = false;
       return sortMovieRatings(filterMovieRatings(mr, filter), sort);
     });
   };
 
-  return { ratings, getMovieRatings };
+  return { loading, ratings, getMovieRatings };
 });

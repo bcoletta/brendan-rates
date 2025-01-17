@@ -1,5 +1,51 @@
 type Modify<T, R> = Omit<T, keyof R> & R;
 
+// TODO - Move Design System types to their own .d.ts
+export interface PropItem {
+    text?: string
+    value: string|number
+}
+
+export interface DropdownItem {
+    image?: string;
+    text: string;
+    value: number;
+}
+
+export interface NotificationAction {
+    route?: string
+}
+
+export interface NotificationType {
+    message: string
+    id?: number
+    timeout?: number
+    color?: string
+    action?: NotificationAction
+}
+
+export interface Tab {
+    id: number,
+    name: string,
+    active: boolean,
+}
+
+export interface TabListConfig {
+    bgColor?: string,
+    borderColor?: string,
+    tabBgColor?: string,
+    tabBorderColor?: string,
+    activeTabBgColor?: string,
+    activeTabBorderColor?: string,
+}
+
+export interface TabList {
+    tabs: Tab[],
+    config?: TabListConfig,
+}
+
+/*** END DESIGN SYSTEM ***/
+
 export interface TMDBMovie {
     adult: boolean
     backdrop_path: string
@@ -46,17 +92,6 @@ export interface RatingPoint {
     y: number
 }
 
-export interface PropItem {
-    text?: string
-    value: string|number
-}
-
-export interface DropdownItem {
-    image?: string;
-    text: string;
-    value: number;
-}
-
 export interface AddMovieBody {
     password: string
     title: string
@@ -65,18 +100,6 @@ export interface AddMovieBody {
     s: number
     date: string
     review?: string
-}
-
-export interface NotificationAction {
-    route?: string
-}
-
-export interface NotificationType {
-    message: string
-    id?: number
-    timeout?: number
-    color?: string
-    action?: NotificationAction
 }
 
 export interface StoreGetterArgs {

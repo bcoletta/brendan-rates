@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '~/tailwind.config.js';
 

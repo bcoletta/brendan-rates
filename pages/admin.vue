@@ -25,7 +25,6 @@ const checkPassword = (): void => {
 </script>
 
 <template>
-  <!-- TODO - admin login -->
   <add-rating v-if="authenticated" />
   <form v-else @submit.prevent="checkPassword" class="p-4">
     <bc-input label="Password" inputType="password" v-model="password"/>

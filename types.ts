@@ -78,3 +78,9 @@ export interface NotificationType {
     color?: string
     action?: NotificationAction
 }
+
+export interface StoreGetterArgs {
+    filter?: string,
+    force?: boolean,
+    sort?: string,
+}

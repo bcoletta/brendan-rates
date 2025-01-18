@@ -73,6 +73,7 @@ const submit = (): void => {
       message: `Rating for ${title.value} added!`,
       color: 'bg-emerald-500',
     });
+    reset();
   }).catch();
 };
 

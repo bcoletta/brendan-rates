@@ -6,7 +6,7 @@ import { useUserStore } from "~/store/user";
 
 const $user = useUserStore();
 
-const authenticated = ref<boolean>(true);
+const authenticated = ref<boolean>(false);
 const invalidPassword = ref<boolean>(false);
 const password = ref<string>();
 
@@ -25,12 +25,14 @@ const checkPassword = (): void => {
 </script>
 
 <template>
-  <add-rating v-if="authenticated" />
-  <form v-else @submit.prevent="checkPassword" class="p-4">
-    <bc-input label="Password" inputType="password" v-model="password"/>
-    <bc-button type="submit" variant="primary">Check Password</bc-button>
-    <span v-if="invalidPassword" class="text-red-500 font-semibold ml-4">Invalid Password!</span>
-  </form>
+  <div class="container mx-auto">
+    <add-rating v-if="authenticated" />
+    <form v-else @submit.prevent="checkPassword" class="p-4">
+      <bc-input label="Password" inputType="password" v-model="password"/>
+      <bc-button type="submit" variant="primary">Check Password</bc-button>
+      <span v-if="invalidPassword" class="text-red-500 font-semibold ml-4">Invalid Password!</span>
+    </form>
+  </div>
 </template>
 
 <style scoped>

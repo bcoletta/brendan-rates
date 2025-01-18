@@ -46,5 +46,6 @@ const slotSpanClass = computed((): string => {
 <style scoped>
 button:disabled {
   pointer-events: none;
+  opacity: 0.5;
 }
 </style>

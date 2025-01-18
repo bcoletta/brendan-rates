@@ -21,6 +21,7 @@ const tmdbId = ref<number>();
 const review = ref<string>();
 
 const saving = ref<boolean>(false);
+const titleInput = useTemplateRef('titleSearch');
 
 const reset = () => {
   title.value = '';
@@ -29,6 +30,8 @@ const reset = () => {
   dateWatched.value = format(new Date(), 'YYYY-MM-DD');
   tmdbId.value = -1;
   review.value = '';
+
+  if (titleInput?.value) titleInput.value.reset();
 };
 
 const searchMovies = (searchTerm:string): Promise<DropdownItem[]> => {
@@ -84,7 +87,7 @@ reset();
 <div class="mx-4 md:mx-auto p-4 md:max-w-[50%] border border-white">
   <div class="text-center font-semibold">Add Movie Rating</div>
 
-  <bc-search-input label="Title" :search-function="searchMovies" @select="setTitle" />
+  <bc-search-input ref="titleSearch" label="Title" :search-function="searchMovies" @select="setTitle" />
   <bc-input label="Entertainment" v-model="entertainment" inputType="number" />
   <bc-input label="Story" v-model="story" inputType="number" />
   <bc-input label="Date Watched" v-model="dateWatched" inputType="date" />

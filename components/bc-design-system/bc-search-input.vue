@@ -32,6 +32,12 @@ const hasResults = computed((): boolean => {
   return dropdownItems.value.length > 0;
 });
 
+const debouncedSearch = debounce(async () => {
+  props.searchFunction(searchTerm.value).then((results: DropdownItem[]) => {
+    dropdownItems.value = [ ...results ];
+  });
+}, 400);
+
 const select = (item:DropdownItem): void => {
   emit('select', item);
   emit('select:value', item.value);
@@ -57,13 +63,15 @@ const setDropdownPosition = (): void => {
   dropdownMenuEl.style.width = `${inputElPos.width}px`;
 }
 
-const debouncedSearch = debounce(async () => {
-  props.searchFunction(searchTerm.value).then((results: DropdownItem[]) => {
-    dropdownItems.value = [ ...results ];
-  });
-}, 400);
+const reset = (): void => {
+  searchTerm.value = '';
+};
 
 watch(searchTerm, debouncedSearch);
+
+defineExpose({
+  reset,
+});
 </script>
 
 <template>

@@ -1,9 +1,13 @@
-import { getMovies } from '~/services/movies';
-import type { MovieRating, StoreGetterArgs } from '~/types';
+import { getMovies, getMovieReport } from '~/services/movies';
+import type { MovieRating, MovieReport, StoreGetterArgs } from '~/types';
 
 export const useMovieStore = defineStore('movies', () => {
   const loading = ref<boolean>(false);
   const ratings = ref<MovieRating[]>([]);
+  const report = ref<MovieReport>({
+    overall: { avg_e: 0, avg_s: 0, total: 0 },
+    years: [ { avg_e: 0, avg_s: 0, total: 0 } ],
+  });
 
   const filterMovieRatings = (movieRatings: MovieRating[], filter:string): MovieRating[] => {
     if (!filter) return movieRatings;
@@ -45,5 +49,14 @@ export const useMovieStore = defineStore('movies', () => {
     });
   };
 
-  return { loading, ratings, getMovieRatings };
+  const getMovieStats = ({ force=false }: StoreGetterArgs): Promise<MovieReport> => {
+    loading.value = true;
+    return getMovieReport().then((res:MovieReport) => {
+      report.value = res;
+      loading.value = false;
+      return res;
+    });
+  };
+
+  return { loading, ratings, report, getMovieRatings, getMovieStats };
 });

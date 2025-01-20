@@ -3,6 +3,7 @@ import BcTabs from '~/components/bc-design-system/bc-tabs.vue';
 import Masthead from '~/components/masthead.vue';
 import MovieRatings from '~/components/movie-ratings.vue';
 import type { Tab, TabList } from '~/types';
+import MovieStats from "~/components/movie-stats.vue";
 
 const tabs = ref<TabList>({
   tabs: [
@@ -32,10 +33,7 @@ const setActiveTab = (tab: Tab) => {
 
     <movie-ratings v-if="activeTabId === 1" />
 
-    <!-- TODO - Move to movie-stats component -->
-    <template v-if="activeTabId === 2">
-      Stats
-    </template>
+    <movie-stats v-if="activeTabId === 2" />
 
   </div>
 </template>

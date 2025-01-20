@@ -107,3 +107,30 @@ export interface StoreGetterArgs {
     force?: boolean,
     sort?: string,
 }
+
+export interface MovieReportStats {
+    avg_e: number
+    avg_s: number
+    byMonth?: {
+        0?: MovieReportStats
+        1?: MovieReportStats
+        2?: MovieReportStats
+        3?: MovieReportStats
+        4?: MovieReportStats
+        5?: MovieReportStats
+        6?: MovieReportStats
+        7?: MovieReportStats
+        8?: MovieReportStats
+        9?: MovieReportStats
+        10?: MovieReportStats
+        11?: MovieReportStats
+    }
+    topTen?: MovieRating[]
+    total: number
+    year?: string
+}
+
+export interface MovieReport {
+    overall: MovieReportStats
+    years: MovieReportStats[]
+}

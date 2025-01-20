@@ -3,7 +3,7 @@ import tailwindConfig from '~/tailwind.config.js';
 
 const fullConfig = resolveConfig(tailwindConfig);
 
-export const useUtilStore = defineStore('useUtilStore', () => {
+export const useUtilStore = defineStore('utils', () => {
     const activeBreakpoint = ref<string>('');
     const colors = fullConfig.theme.colors;
 

@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import API from './api';
-import type { AddMovieBody, ApiMovieRating, MovieRating } from "~/types";
+import type {AddMovieBody, ApiMovieRating, MovieRating, MovieReport} from "~/types";
 
 const baseURI = 'movies';
 
@@ -15,6 +15,16 @@ export const getMovies = (): Promise<MovieRating[]> => {
     })
     .catch((err: Error) => err);
 };
+
+export const getMovieReport = (): Promise<MovieReport> => {
+  return API.get(`${baseURI}/report`)
+    .then((res:AxiosResponse|Error) => {
+      if (res instanceof Error) return [];
+
+      return res.data;
+    })
+    .catch((err: Error) => err);
+}
 
 export const addMovie = (body:AddMovieBody): Promise<AxiosResponse|Error> => {
   return API.put(baseURI, body)

@@ -14,6 +14,7 @@ const props = defineProps({
     type: Array as PropType<PropItem[]>,
     default: [],
   },
+  label: String
 });
 
 const internalItems = computed((): InternalSelectItem[] => {
@@ -41,7 +42,7 @@ const onInput = (event: Event): void => {
 </script>
 
 <template>
-  <bc-input label="Title">
+  <bc-input :label="props.label">
     <select
         class="text-neutral-800 bg-sky-100 w-full h-8 rounded-r-xl"
         :value="attrs.modelValue"

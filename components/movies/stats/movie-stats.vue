@@ -4,6 +4,7 @@ import BcLoader from '~/components/bc-design-system/bc-loader.vue';
 import { useMovieStore } from '~/store/movies';
 import type { MovieReportStats, PropItem } from '~/types';
 import BcStat from "~/components/bc-design-system/bc-stat.vue";
+import TopTen from "~/components/movies/stats/top-ten.vue";
 
 const $movies = useMovieStore();
 
@@ -50,11 +51,14 @@ onMounted(getStats);
       <bc-select :items="yearOptions" label="Filter by Year" v-model="activeYear" />
     </div>
 
+    <hr class="my-4 border-slate-500" />
+
     <div>
       <div class="flex justify-around">
         <div class="h-16 w-24">
           <bc-stat label="Total" text-size="text-2xl" :value="activeStats.total" />
         </div>
+
         <div class="h-16 w-32">
           <bc-stat
             label="Avg Entertainment"
@@ -63,6 +67,7 @@ onMounted(getStats);
             :value="activeStats.avg_e.toFixed(2)"
           />
         </div>
+
         <div class="h-16 w-24">
           <bc-stat
             label="Avg Story"
@@ -72,12 +77,18 @@ onMounted(getStats);
           />
         </div>
       </div>
+
+      <hr class="my-4 border-slate-500" />
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:col-span-2">
           <div><!-- TODO - total movies chart -->total movies chart</div>
           <div><!-- TODO - yearly average chart -->yearly average chart</div>
         </div>
-        <div><!-- TODO - top ten movies -->top ten movies</div>
+
+        <div class="bg-slate-800 text-gray-300">
+          <top-ten :time-span="activeYear" :top-ten="activeStats.topTen" />
+        </div>
       </div>
     </div>
   </template>

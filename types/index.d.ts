@@ -71,6 +71,7 @@ export interface TMDBSearchResult {
 }
 
 export interface MovieRating {
+    avg?: number
     date: string
     s: number
     id: string
@@ -128,6 +129,13 @@ export interface MovieReportStats {
     topTen?: MovieRating[]
     total: number
     year?: string
+}
+
+export interface TopTenStats {
+    avg: number
+    id: string
+    rank: number
+    title: string
 }
 
 export interface MovieReport {

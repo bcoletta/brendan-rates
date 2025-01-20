@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import BcTabs from '~/components/bc-design-system/bc-tabs.vue';
 import Masthead from '~/components/masthead.vue';
-import MovieRatings from '~/components/movie-ratings.vue';
+import MovieRatings from '~/components/movies/ratings/movie-ratings.vue';
 import type { Tab, TabList } from '~/types';
-import MovieStats from "~/components/movie-stats.vue";
+import MovieStats from "~/components/movies/stats/movie-stats.vue";
 
 const tabs = ref<TabList>({
   tabs: [
@@ -27,7 +27,7 @@ const setActiveTab = (tab: Tab) => {
   <masthead class="mt-4" />
 
   <div class="container mx-auto">
-    <hr class="my-4 bg-red-700" />
+    <hr class="my-4 border-slate-500" />
 
     <bc-tabs :tabs="tabs" @select="setActiveTab" />
 

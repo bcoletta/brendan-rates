@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BcLoader from '~/components/bc-design-system/bc-loader.vue';
-import MovieList from '~/components/movie-list.vue';
-import MovieChart from '~/components/movie-chart.vue';
+import MovieList from '~/components/movies/ratings/movie-list.vue';
+import MovieChart from '~/components/movies/ratings/movie-chart.vue';
 import { useMovieStore } from '~/store/movies';
 import type { MovieRating } from '~/types';
 

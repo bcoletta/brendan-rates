@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import BcSelect from '~/components/bc-design-system/bc-select.vue';
-import BcLoader from '~/components/bc-design-system/bc-loader.vue';
-import { useMovieStore } from '~/store/movies';
-import type { MovieReportStats, PropItem } from '~/types';
-import BcStat from "~/components/bc-design-system/bc-stat.vue";
-import TopTen from "~/components/movies/stats/top-ten.vue";
-import MoviesByYear from "~/components/movies/stats/movies-by-year.vue";
 import AveragesByYear from '~/components/movies/stats/averages-by-year.vue';
+import BcLoader from '~/components/bc-design-system/bc-loader.vue';
+import BcSelect from '~/components/bc-design-system/bc-select.vue';
+import BcStat from "~/components/bc-design-system/bc-stat.vue";
 import MoviesByMonth from '~/components/movies/stats/movies-by-month.vue';
+import MoviesByYear from "~/components/movies/stats/movies-by-year.vue";
+import TopTen from "~/components/movies/stats/top-ten.vue";
+import { useMovieStore } from '~/store/movies';
+import { useUtilStore } from '~/store/utils';
+import type { MovieReportStats, PropItem } from '~/types';
 
 const $movies = useMovieStore();
+const $utils = useUtilStore();
 
 const activeYear = ref<string>('overall');
 
@@ -88,10 +90,20 @@ onMounted(getStats);
           <div>
             <movies-by-year v-if="activeYear === 'overall'" :years="$movies.report.years" />
             <movies-by-month v-else :year="activeStats" />
+
+            <hr
+              v-if="['xs', 'sm'].includes($utils.activeBreakpoint)"
+              class="mt-4 border-slate-500 border-dashed"
+            />
           </div>
-          <div>
+          <div v-if="activeYear === 'overall'" class="mt-4 md:mt-0">
             <averages-by-year v-if="activeYear === 'overall'" :years="$movies.report.years" />
             <!-- TODO - second year chart -->
+
+            <hr
+                v-if="['xs', 'sm'].includes($utils.activeBreakpoint)"
+                class="mt-4 border-slate-500 border-dashed"
+            />
           </div>
         </div>
 

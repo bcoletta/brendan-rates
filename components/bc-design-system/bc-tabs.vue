@@ -39,7 +39,7 @@ const tabClass = (tab:Tab): string => {
 </script>
 
 <template>
-  <div class="w-full flex border-b" :class="containerClass">
+  <div class="w-full flex border-b rounded-t overflow-hidden" :class="containerClass">
     <div
         v-for="tab in tabList"
         :key="tab.name"

@@ -44,7 +44,7 @@ const chartData = computed((): ChartData => ({
   datasets: [
     {
       label: 'Movie Ratings',
-      backgroundColor: $utils.colors.orange[400],
+      backgroundColor: $utils.colors.orange[300],
       data: points.value,
     }
   ],

@@ -4,10 +4,17 @@ import BcInput from "~/components/bc-design-system/bc-input.vue";
 
 const $emit = defineEmits([ 'search' ]);
 const { ratings } = defineProps({
-  ratings: Array as PropType<MovieRating[]>,
+  ratings: {
+    type: Array as PropType<MovieRating[]>,
+    default: [],
+  },
 });
 
 const search = ref<string>('');
+
+const hasData = computed((): boolean => {
+  return ratings?.length > 0;
+});
 </script>
 
 <template>
@@ -20,6 +27,7 @@ const search = ref<string>('');
       @update:modelValue="$emit('search', $event)"
     />
   </div>
+
   <div
       v-for="rating in ratings"
       :key="rating.id"
@@ -41,6 +49,10 @@ const search = ref<string>('');
         <div class="absolute -bottom-[.4rem] text-xs px-1 bg-slate-800">S</div>
       </div>
     </div>
+  </div>
+
+  <div v-if="!hasData" class="border-b p-2 bg-slate-800 text-gray-300">
+    No results found.
   </div>
 </template>
 

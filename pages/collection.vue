@@ -1,5 +1,10 @@
 <script setup lang="ts">
 // import discs from "../assets/data/discs.json";
+
+useHead({
+  title: 'Brendan Rates Movies - Collection',
+});
+
 // let movies = [], tv = [];
 // discs.forEach(d => {
 //   d.location?.startsWith('t') ? tv.push(d) : movies.push(d);

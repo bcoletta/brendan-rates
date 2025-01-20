@@ -4,6 +4,10 @@ import BcInput from "~/components/bc-design-system/bc-input.vue";
 import { validateUser } from "~/services/user";
 import { useUserStore } from "~/store/user";
 
+useHead({
+  title: 'Brendan Rates Movies - Admin',
+});
+
 const $user = useUserStore();
 
 const authenticated = ref<boolean>(false);

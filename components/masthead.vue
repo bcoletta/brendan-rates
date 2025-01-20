@@ -6,7 +6,6 @@
 <div class="w-full md:w-1/2 mx-auto p-4 bg-slate-700 rounded-lg text-center">
   <h1 class="text-xl font-bold">Welcome to Brendan Rates Movies!</h1>
   <div>
-    <!-- TODO - Better copy -->
     Hi! I'm Brendan and since 2019 I have been rating movies based on how interesting I found the
     story and how entertaining I thought the movie was as a whole.
   </div>

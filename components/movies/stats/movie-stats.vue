@@ -5,6 +5,9 @@ import { useMovieStore } from '~/store/movies';
 import type { MovieReportStats, PropItem } from '~/types';
 import BcStat from "~/components/bc-design-system/bc-stat.vue";
 import TopTen from "~/components/movies/stats/top-ten.vue";
+import MoviesByYear from "~/components/movies/stats/movies-by-year.vue";
+import AveragesByYear from '~/components/movies/stats/averages-by-year.vue';
+import MoviesByMonth from '~/components/movies/stats/movies-by-month.vue';
 
 const $movies = useMovieStore();
 
@@ -81,9 +84,15 @@ onMounted(getStats);
       <hr class="my-4 border-slate-500" />
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:col-span-2">
-          <div><!-- TODO - total movies chart -->total movies chart</div>
-          <div><!-- TODO - yearly average chart -->yearly average chart</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 md:col-span-2">
+          <div>
+            <movies-by-year v-if="activeYear === 'overall'" :years="$movies.report.years" />
+            <movies-by-month v-else :year="activeStats" />
+          </div>
+          <div>
+            <averages-by-year v-if="activeYear === 'overall'" :years="$movies.report.years" />
+            <!-- TODO - second year chart -->
+          </div>
         </div>
 
         <div class="bg-slate-800 text-gray-300">

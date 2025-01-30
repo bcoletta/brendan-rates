@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { debounce as _debounce } from 'lodash';
-
 const attrs = useAttrs();
 const $emit = defineEmits([ 'update:modelValue', 'blur', 'focus' ]);
 const props = defineProps({

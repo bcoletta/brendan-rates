@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { debounce } from 'lodash';
 import type { DropdownItem } from "~/types";
 import BcInput from "~/components/bc-design-system/bc-input.vue";
 
@@ -32,7 +31,7 @@ const hasResults = computed((): boolean => {
   return dropdownItems.value.length > 0;
 });
 
-const debouncedSearch = debounce(async () => {
+const debouncedSearch = _debounce(async () => {
   props.searchFunction(searchTerm.value).then((results: DropdownItem[]) => {
     dropdownItems.value = [ ...results ];
   });

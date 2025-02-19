@@ -2,12 +2,12 @@
 const props = defineProps({
   labelBgColor: {
     type: String,
-    default: 'bg-slate-900'
+    default: 'bg-slate-900',
   },
   label: String,
   textSize: {
     type: String,
-    default: 'text-lg'
+    default: 'text-lg',
   },
   title: String,
   value: [Number,String],
@@ -15,7 +15,7 @@ const props = defineProps({
 
 const title = computed(():string => {
   return props.title || props.label || '';
-})
+});
 </script>
 
 <template>

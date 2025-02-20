@@ -70,7 +70,6 @@ const submit = (): void => {
   }
 
   addMovie(payload).then(() => {
-    console.log("Successfully added");
     saving.value = false;
     $notification.addNotification({
       message: `Rating for ${title.value} added!`,

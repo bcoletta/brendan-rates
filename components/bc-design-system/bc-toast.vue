@@ -19,7 +19,6 @@ const notificationClass = computed<string>(() => {
 
   if (notification.action) classStr += 'cursor-pointer ';
 
-  console.log('classStr', classStr);
   return classStr;
 });
 

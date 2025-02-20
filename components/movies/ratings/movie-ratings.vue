@@ -23,7 +23,6 @@ const filter = (searchTerm:string) => {
   getMovieData(searchTerm);
 };
 
-
 onMounted(getMovieData);
 </script>
 

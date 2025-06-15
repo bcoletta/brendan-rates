@@ -46,6 +46,53 @@ export interface TabList {
 
 /*** END DESIGN SYSTEM ***/
 
+export enum TMDB_GENDER {
+    NOT_SPECIFIED = 0,
+    FEMALE = 1,
+    MALE = 2,
+    NON_BINARY = 3,
+}
+
+export interface TMDBCastMember {
+    adult: boolean
+    gender: TMDB_GENDER
+    id: number
+    known_for_department: string
+    name: string
+    original_name: string
+    popularity: number
+    profile_path: string
+    cast_id: number
+    character: string
+    credit_id: string
+    order: number
+}
+
+export interface TMDBCrewMember {
+    adult: boolean
+    gender: TMDB_GENDER
+    id: number
+    known_for_department: string
+    name: string
+    original_name: string
+    popularity: number
+    profile_path: string
+    credit_id: string
+    department: string
+    job: string
+}
+
+export interface TMDBCountry {
+    iso_3166_1: string
+    name: string
+}
+
+export interface TMDBLanguage {
+    english_name: string
+    iso_639_1: string
+    name: string
+}
+
 export interface TMDBMovie {
     adult: boolean
     backdrop_path: string
@@ -57,6 +104,48 @@ export interface TMDBMovie {
     popularity: number
     poster_path: string
     release_date: string
+    title: string
+    video: boolean
+    vote_average: number
+    vote_count: number
+}
+
+export interface TMDBProductionCompany {
+    id: number
+    logo_path: string
+    name: string
+    origin_country: string
+}
+
+export interface TMDBCreditsResult {
+    id?: number
+    cast: TMDBCastMember[]
+    crew: TMDBCrewMember[]
+}
+
+export interface TMDBDetailsResult {
+    adult: boolean
+    backdrop_path: string
+    belongs_to_collection: string
+    budget: integer
+    credits?: TMDBCreditsResult
+    genres: { id: number; name: string }[]
+    homepage: string
+    id: number
+    imdb_id: string
+    original_language: string
+    original_title: string
+    overview: string
+    popularity: number
+    poster_path: string
+    production_companies: TMDBProductionCompany[]
+    production_country: TMDBCountry[]
+    release_date: string
+    revenue: number
+    runtime: number
+    spoken_languages: TMDBLanguage[]
+    status: string
+    tagline: string
     title: string
     video: boolean
     vote_average: number

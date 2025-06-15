@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { MovieRating } from '~/types';
 import BcInput from "~/components/bc-design-system/bc-input.vue";
+import BcModal from "~/components/bc-design-system/bc-modal.vue";
 import BcStat from "~/components/bc-design-system/bc-stat.vue";
+import MovieInfo from '~/components/movies/movie-info.vue';
 
 const $emit = defineEmits([ 'search' ]);
 const { ratings } = defineProps({
@@ -12,10 +14,25 @@ const { ratings } = defineProps({
 });
 
 const search = ref<string>('');
+const showInfoModal = ref<boolean>(false);
+const selectedRating = ref<MovieRating>();
 
 const hasData = computed((): boolean => {
   return ratings?.length > 0;
 });
+
+const infoHeader = computed((): string => {
+  return selectedRating.value?.title || 'No Data';
+});
+
+const openInfoModal = (rating: MovieRating) => {
+  selectedRating.value = rating;
+  showInfoModal.value = true;
+};
+
+const closeInfoModal = (): void => {
+  showInfoModal.value = false;
+};
 </script>
 
 <template>
@@ -33,6 +50,7 @@ const hasData = computed((): boolean => {
       v-for="rating in ratings"
       :key="rating.id"
       class="grid grid-cols-3 border-b p-2 bg-slate-800 text-gray-300"
+      @click="openInfoModal(rating)"
   >
     <div class="col-span-2">
       <div class="font-semibold text-lg" :title="rating.title">{{ rating.title }}</div>
@@ -57,6 +75,15 @@ const hasData = computed((): boolean => {
   <div v-if="!hasData" class="border-b p-2 bg-slate-800 text-gray-300">
     No results found.
   </div>
+
+  <bc-modal :open="showInfoModal" @close="closeInfoModal" :hasFooter="false">
+    <template v-slot:header>
+      {{ infoHeader }}
+    </template>
+    <template v-slot:body>
+      <MovieInfo :tmdbId="selectedRating && selectedRating.tmdbId || -1" />
+    </template>
+  </bc-modal>
 </template>
 
 <style scoped>

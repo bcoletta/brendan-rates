@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import type { MovieRating } from '~/types';
+import { DStoreError } from '~/constants';
+import type { MovieRating, TMDBDetailsResult } from '~/types';
+import { format } from '@formkit/tempo';
 import BcInput from "~/components/bc-design-system/bc-input.vue";
 import BcModal from "~/components/bc-design-system/bc-modal.vue";
 import BcStat from "~/components/bc-design-system/bc-stat.vue";
 import MovieInfo from '~/components/movies/movie-info.vue';
+import { useTMDBStore } from '~/store/tmdb';
 
 const $emit = defineEmits([ 'search' ]);
 const { ratings } = defineProps({
@@ -13,25 +16,48 @@ const { ratings } = defineProps({
   },
 });
 
+const $tmdb = useTMDBStore();
+
 const search = ref<string>('');
 const showInfoModal = ref<boolean>(false);
 const selectedRating = ref<MovieRating>();
+const selectedRatingDetails = ref<TMDBDetailsResult>();
 
 const hasData = computed((): boolean => {
   return ratings?.length > 0;
 });
 
 const infoHeader = computed((): string => {
-  return selectedRating.value?.title || 'No Data';
+  let infoStr: string = selectedRating.value?.title || '';
+
+  const releaseDate: string = selectedRatingDetails.value?.release_date || '';
+  if (releaseDate) infoStr += ` (${format(new Date(releaseDate), 'YYYY')})`;
+
+  return infoStr || 'No Data';
 });
+
+const loadMovieDetails = (tmdbId: number) => {
+  $tmdb.getMovieDetails(tmdbId)
+    .then((dtls: TMDBDetailsResult) => {
+      selectedRatingDetails.value = dtls;
+    })
+    .catch((err: DStoreError) => {
+      if (err === DStoreError.RETRY) {
+        setTimeout(() => loadMovieDetails(tmdbId), 100);
+      }
+    });
+};
 
 const openInfoModal = (rating: MovieRating) => {
   selectedRating.value = rating;
   showInfoModal.value = true;
+
+  loadMovieDetails(selectedRating.value.tmdbId);
 };
 
 const closeInfoModal = (): void => {
   showInfoModal.value = false;
+  selectedRating.value = undefined;
 };
 </script>
 
@@ -81,7 +107,7 @@ const closeInfoModal = (): void => {
       {{ infoHeader }}
     </template>
     <template v-slot:body>
-      <MovieInfo :tmdbId="selectedRating && selectedRating.tmdbId || -1" />
+      <MovieInfo v-if="selectedRating" :tmdbId="selectedRating.tmdbId || -1" />
     </template>
   </bc-modal>
 </template>

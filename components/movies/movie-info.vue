@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import type { TMDBCrewMember, TMDBCastMember, TMDBDetailsResult } from '~/types';
+import type { TMDBCastMember, TMDBCrewMember, TMDBDetailsResult } from '~/types';
+import { DStoreError } from '~/constants';
 import BcLoader from '~/components/bc-design-system/bc-loader.vue';
-import { fetchTMDBMovieDetails } from '~/services/tmdb-api';
+import { useTMDBStore } from '~/store/tmdb';
 
 const props = defineProps({
   tmdbId: { type: Number, default: -1 },
 });
 
 const $config = useRuntimeConfig();
+const $tmdb = useTMDBStore();
 
 const BASE_IMG_URL = 'https://image.tmdb.org/t/p/'; // TODO - Load from configuration endpoint
 
@@ -52,10 +54,15 @@ const writer = computed((): string => {
 
 const getMovieInfo = () => {
   loading.value = true;
-  fetchTMDBMovieDetails(props.tmdbId, $config.public.tmdbToken)
-    .then((details: TMDBDetailsResult) => {
-      movieInfo.value = details;
+  $tmdb.getMovieDetails(props.tmdbId)
+    .then((dtls: TMDBDetailsResult) => {
+      movieInfo.value = dtls;
       loading.value = false;
+    })
+    .catch((err: DStoreError) => {
+      if (err === DStoreError.RETRY) {
+        setTimeout(() => getMovieInfo(), 100);
+      }
     });
 };
 

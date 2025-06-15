@@ -1,3 +1,5 @@
+import { DTMDBGender } from '~/constants';
+
 type Modify<T, R> = Omit<T, keyof R> & R;
 
 // TODO - Move Design System types to their own .d.ts
@@ -46,16 +48,9 @@ export interface TabList {
 
 /*** END DESIGN SYSTEM ***/
 
-export enum TMDB_GENDER {
-    NOT_SPECIFIED = 0,
-    FEMALE = 1,
-    MALE = 2,
-    NON_BINARY = 3,
-}
-
 export interface TMDBCastMember {
     adult: boolean
-    gender: TMDB_GENDER
+    gender: DTMDBGender
     id: number
     known_for_department: string
     name: string
@@ -70,7 +65,7 @@ export interface TMDBCastMember {
 
 export interface TMDBCrewMember {
     adult: boolean
-    gender: TMDB_GENDER
+    gender: DTMDBGender
     id: number
     known_for_department: string
     name: string
@@ -167,6 +162,11 @@ export interface MovieRating {
     e: number
     tmdbId: number
     title: string
+}
+
+export interface Movie {
+    rating: MovieRating
+    details: TMDBDetailsResult
 }
 
 export type ApiMovieRating = Modify<MovieRating, {

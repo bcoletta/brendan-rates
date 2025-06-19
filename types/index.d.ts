@@ -77,9 +77,21 @@ export interface TMDBCrewMember {
     job: string
 }
 
+export interface TMDBCollection {
+    id: number,
+    name: string,
+    poster_path: string,
+    backdrop_path: string,
+}
+
 export interface TMDBCountry {
     iso_3166_1: string
     name: string
+}
+
+export interface TMDBGenre {
+    id: number,
+    name: string,
 }
 
 export interface TMDBLanguage {
@@ -121,7 +133,7 @@ export interface TMDBCreditsResult {
 export interface TMDBDetailsResult {
     adult: boolean
     backdrop_path: string
-    belongs_to_collection: string
+    belongs_to_collection: TMDBCollection | null
     budget: integer
     credits?: TMDBCreditsResult
     genres: { id: number; name: string }[]

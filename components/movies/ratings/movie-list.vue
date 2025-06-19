@@ -28,12 +28,9 @@ const hasData = computed((): boolean => {
 });
 
 const infoHeader = computed((): string => {
-  let infoStr: string = selectedRating.value?.title || '';
+  if (!selectedRating.value) return 'No Data';
 
-  const releaseDate: string = selectedRatingDetails.value?.release_date || '';
-  if (releaseDate) infoStr += ` (${format(new Date(releaseDate), 'YYYY')})`;
-
-  return infoStr || 'No Data';
+  return `${selectedRating.value.title} (${selectedRating.value.e}e/${selectedRating.value.s}s)`;
 });
 
 const loadMovieDetails = (tmdbId: number) => {

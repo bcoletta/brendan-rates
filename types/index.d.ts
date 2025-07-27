@@ -166,6 +166,11 @@ export interface TMDBSearchResult {
     total_results: number
 }
 
+export interface BaseMovieRating {
+    e: number
+    s: number
+}
+
 export interface MovieRating {
     avg?: number
     date: string
@@ -182,8 +187,8 @@ export interface Movie {
 }
 
 export type ApiMovieRating = Modify<MovieRating, {
-    s: string
     e: string
+    s: string
 }>
 
 export interface RatingPoint {

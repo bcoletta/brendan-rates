@@ -1,7 +1,12 @@
 import { getMovies, getMovieReport } from '~/services/movies';
-import type { MovieRating, MovieReport, StoreGetterArgs } from '~/types';
+import type { BaseMovieRating, MovieRating, MovieReport, StoreGetterArgs } from '~/types';
+
+const roundHalf = (num: number): number => {
+  return Math.round(num * 2) / 2;
+};
 
 export const useMovieStore = defineStore('movies', () => {
+  const avgMovie = ref<BaseMovieRating>({ e: 5, s: 5 });
   const loading = ref<boolean>(false);
   const ratings = ref<MovieRating[]>([]);
   const report = ref<MovieReport>({
@@ -53,13 +58,21 @@ export const useMovieStore = defineStore('movies', () => {
   };
 
   const getMovieStats = ({ force=false }: StoreGetterArgs): Promise<MovieReport> => {
+    if (!force && report.value.overall.total > 0) {
+      return Promise.resolve(report.value);
+    }
+
     loading.value = true;
     return getMovieReport().then((res:MovieReport) => {
       report.value = res;
       loading.value = false;
+      avgMovie.value = {
+        e: roundHalf(res.overall.avg_e),
+        s: roundHalf(res.overall.avg_s),
+      };
       return res;
     });
   };
 
-  return { loading, ratings, report, getMovieRatings, getMovieStats };
+  return { avgMovie, loading, ratings, report, getMovieRatings, getMovieStats };
 });

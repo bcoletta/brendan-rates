@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import Bubble from '~/components/charts/bubble.vue';
+import { useMovieStore } from '~/store/movies';
 import { useUtilStore } from "~/store/utils";
 import type { MovieRating, RatingPoint } from '~/types';
-import type { TooltipItem, ChartType, ChartData, ChartOptions } from 'chart.js';
+import type { TooltipItem, ChartType, ChartData, ChartOptions, ScriptableContext, BubbleDataPoint } from 'chart.js';
 
 const { ratings=[] } = defineProps({
   ratings: Array as PropType<MovieRating[]>
 });
 
+const $movies = useMovieStore();
 const $utils = useUtilStore();
 
 const points = computed<RatingPoint[]>(() => {
@@ -44,7 +46,12 @@ const chartData = computed((): ChartData => ({
   datasets: [
     {
       label: 'Movie Ratings',
-      backgroundColor: $utils.colors.orange[300],
+      backgroundColor: function(ctx: ScriptableContext<'bubble'>) {
+        const idx: number = ctx.dataIndex;
+        const val: BubbleDataPoint = ctx.dataset.data[idx];
+
+        return getBackgroundColor(val);
+      },
       data: points.value,
     }
   ],
@@ -92,6 +99,28 @@ const chartOptions = computed((): ChartOptions => ({
     },
   },
 }));
+
+const getBackgroundColor = (pt: BubbleDataPoint): string => {
+  if (!pt?.x || !pt?.y) return $utils.colors.white;
+
+  const xDistance: number = (pt.x - $movies.avgMovie.s) ** 2; // '** 2' is ES6 syntax for x^2
+  const yDistance: number = (pt.y - $movies.avgMovie.e) ** 2;
+  const distance: number = Math.sqrt(xDistance + yDistance);
+
+  if (distance === 0) return $utils.colors.orange[500];
+  if (distance < 1) return $utils.colors.orange[400];
+  if (distance < 2) return $utils.colors.orange[300];
+  if (distance < 3) return $utils.colors.orange[200];
+  if (distance < 4) return $utils.colors.orange[100];
+
+  return $utils.colors.white;
+};
+
+const getStats = () => {
+  $movies.getMovieStats({});
+}
+
+onBeforeMount(getStats);
 </script>
 
 <template>

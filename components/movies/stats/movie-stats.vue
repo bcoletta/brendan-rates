@@ -3,6 +3,7 @@ import AveragesByYear from '~/components/movies/stats/averages-by-year.vue';
 import BcLoader from '~/components/bc-design-system/bc-loader.vue';
 import BcSelect from '~/components/bc-design-system/bc-select.vue';
 import BcStat from "~/components/bc-design-system/bc-stat.vue";
+import HallOfFame from '~/components/movies/stats/hall-of-fame.vue';
 import MoviesByMonth from '~/components/movies/stats/movies-by-month.vue';
 import MoviesByYear from "~/components/movies/stats/movies-by-year.vue";
 import TopTen from "~/components/movies/stats/top-ten.vue";
@@ -98,7 +99,6 @@ onMounted(getStats);
           </div>
           <div v-if="activeYear === 'overall'" class="mt-4 md:mt-0">
             <averages-by-year v-if="activeYear === 'overall'" :years="$movies.report.years" />
-            <!-- TODO - second year chart -->
 
             <hr
                 v-if="['xs', 'sm'].includes($utils.activeBreakpoint)"
@@ -108,7 +108,8 @@ onMounted(getStats);
         </div>
 
         <div class="bg-slate-800 text-gray-300">
-          <top-ten :time-span="activeYear" :top-ten="activeStats.topTen" />
+          <hall-of-fame v-if="activeYear === 'overall'" />
+          <top-ten v-else :time-span="activeYear" :top-ten="activeStats.topTen" />
         </div>
       </div>
     </div>

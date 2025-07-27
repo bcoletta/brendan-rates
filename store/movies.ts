@@ -42,10 +42,13 @@ export const useMovieStore = defineStore('movies', () => {
     }
 
     loading.value = true;
-    return getMovies().then((mr: MovieRating[]) => {
-      ratings.value = [ ...mr ];
+    return getMovies().then((mrs: MovieRating[]) => {
+      ratings.value = mrs.map((mr: MovieRating) => ({
+        ...mr,
+        avg: (mr.e + mr.s) / 2,
+      }));
       loading.value = false;
-      return sortMovieRatings(filterMovieRatings(mr, filter), sort);
+      return sortMovieRatings(filterMovieRatings(ratings.value, filter), sort);
     });
   };
 

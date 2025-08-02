@@ -38,9 +38,11 @@ const searchMovies = (searchTerm:string): Promise<DropdownItem[]> => {
   return searchTMDBMovies(searchTerm, $config.public.tmdbToken)
       .then((json: TMDBSearchResult): DropdownItem[] => {
         return json.results.map((movie: TMDBMovie): DropdownItem => {
+          const releaseYear: string = format(movie.release_date, 'YYYY');
+
           return {
             image: movie.poster_path && `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`,
-            text: movie.title,
+            text: `${movie.title} ({${releaseYear}})`,
             value: movie.id,
           };
         });
@@ -52,7 +54,7 @@ const searchMovies = (searchTerm:string): Promise<DropdownItem[]> => {
 };
 
 const setTitle = (item: DropdownItem): void => {
-  title.value = item.text;
+  title.value = item.text.split('({')[0];
   tmdbId.value = item.value;
 };
 

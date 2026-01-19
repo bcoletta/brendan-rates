@@ -7,8 +7,8 @@ import BcModal from "~/components/bc-design-system/bc-modal.vue";
 import BcStat from "~/components/bc-design-system/bc-stat.vue";
 import MovieInfo from '~/components/movies/movie-info.vue';
 import { useTMDBStore } from '~/store/tmdb';
+import { useMovieStore } from '~/store/movies';
 
-const $emit = defineEmits([ 'search' ]);
 const { ratings } = defineProps({
   ratings: {
     type: Array as PropType<MovieRating[]>,
@@ -16,12 +16,14 @@ const { ratings } = defineProps({
   },
 });
 
+const $movies = useMovieStore();
 const $tmdb = useTMDBStore();
 
-const search = ref<string>('');
 const showInfoModal = ref<boolean>(false);
 const selectedRating = ref<MovieRating>();
 const selectedRatingDetails = ref<TMDBDetailsResult>();
+
+const search = computed((): string => $movies.filters?.title || '');
 
 const hasData = computed((): boolean => {
   return ratings?.length > 0;
@@ -45,6 +47,10 @@ const loadMovieDetails = (tmdbId: number) => {
     });
 };
 
+const setTitleFilter = (searchTerm: string) => {
+  $movies.filters.title = searchTerm;
+};
+
 const openInfoModal = (rating: MovieRating) => {
   selectedRating.value = rating;
   showInfoModal.value = true;
@@ -64,8 +70,8 @@ const closeInfoModal = (): void => {
       class="mt-4 mb-0 h-full rounded-t-lg rounded-b-none"
       :debounce="400"
       placeholder="Search Ratings..."
-      :value="search"
-      @update:modelValue="$emit('search', $event)"
+      :modelValue="search"
+      @update:modelValue="setTitleFilter"
     />
   </div>
 

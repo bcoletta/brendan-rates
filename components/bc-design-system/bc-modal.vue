@@ -35,7 +35,6 @@ const onClick = (el: ModalClickEl) => {
         <slot name="header">
           Header
         </slot>
-        <!-- TODO: Add close button -->
         <button @click="$emit('close')" class="cursor-pointer flex-shrink-0 flex-grow-0">X</button>
       </div>
       <div class="px-4 py-14 max-h-full overflow-y-auto">

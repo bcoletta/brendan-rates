@@ -33,7 +33,7 @@ const internalItems = computed((): InternalSelectItem[] => {
 
 const onInput = (event: Event): void => {
   let newVal: string|number = (event.target as HTMLInputElement).value;
-  const isInteger: boolean = /^\d+$/.test(newVal);
+  const isInteger: boolean = /^-?\d+$/.test(newVal);
 
   if (isInteger) newVal = parseInt(newVal);
 

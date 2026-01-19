@@ -179,6 +179,8 @@ export interface MovieRating {
     e: number
     tmdbId: number
     title: string
+    collection?: TMDBCollection
+    genres?: TMDBGenre[]
 }
 
 export interface Movie {
@@ -189,6 +191,8 @@ export interface Movie {
 export type ApiMovieRating = Modify<MovieRating, {
     e: string
     s: string
+    collection?: string
+    genres?: string
 }>
 
 export interface RatingPoint {
@@ -236,4 +240,24 @@ export interface TopTenStats {
 export interface MovieReport {
     overall: MovieReportStats
     years: MovieReportStats[]
+}
+
+export interface MovieGenre {
+    id: number
+    name: string
+    count: number
+}
+
+export interface MovieCollection {
+    id: number
+    name: string
+    poster_path: string
+    backdrop_path: string
+    count: number
+}
+
+export interface MovieFilters {
+    title?: string
+    genre?: number
+    collection?: number
 }

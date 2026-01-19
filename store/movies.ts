@@ -1,5 +1,11 @@
-import { getMovies, getMovieReport } from '~/services/movies';
-import type { BaseMovieRating, MovieRating, MovieReport, StoreGetterArgs } from '~/types';
+import { getMovies, getMovieReport, getGenres, getCollections } from '~/services/movies';
+import type {
+  BaseMovieRating, MovieCollection, MovieFilters,
+  MovieGenre,
+  MovieRating,
+  MovieReport,
+  StoreGetterArgs, TMDBGenre,
+} from '~/types';
 
 const roundHalf = (num: number): number => {
   return Math.round(num * 2) / 2;
@@ -7,6 +13,8 @@ const roundHalf = (num: number): number => {
 
 export const useMovieStore = defineStore('movies', () => {
   const avgMovie = ref<BaseMovieRating>({ e: 5, s: 5 });
+  const collections = ref<MovieCollection[]>([]);
+  const genres = ref<MovieGenre[]>([]);
   const loading = ref<boolean>(false);
   const ratings = ref<MovieRating[]>([]);
   const report = ref<MovieReport>({
@@ -14,18 +22,43 @@ export const useMovieStore = defineStore('movies', () => {
     years: [ { avg_e: 0, avg_s: 0, total: 0 } ],
   });
 
-  const filterMovieRatings = (movieRatings: MovieRating[], filter:string): MovieRating[] => {
-    if (!filter) return movieRatings;
+  const filters = ref<MovieFilters>({});
+  const sort = ref<string>('date');
 
-    return [ ...movieRatings ].filter((mr: MovieRating) => {
-      return mr.title.toLowerCase().includes(filter.toLowerCase());
-    })
-  };
+  const filteredMovieRatings = computed((): MovieRating[] => {
+    return sortMovieRatings(ratings.value.filter((mr: MovieRating) => {
+      let titleValid = false;
+      let genreValid = false;
+      let collectionValid = false;
 
-  const sortMovieRatings = (movieRatings: MovieRating[], sort:string='none'): MovieRating[] => {
+      if (filters.value.title) {
+        titleValid = mr.title.toLowerCase().includes(filters.value.title.toLowerCase());
+      } else {
+        titleValid = true;
+      }
+
+      if (filters.value.genre && mr.genres?.length) {
+        genreValid = mr.genres.some((mg: TMDBGenre) => filters.value.genre === mg.id);
+      } else {
+        genreValid = true;
+      }
+
+      if (filters.value.collection && mr.collection) {
+        collectionValid = filters.value.collection === mr.collection.id;
+      } else if (filters.value.collection && !mr.collection) {
+        collectionValid = false;
+      } else {
+        collectionValid = true;
+      }
+
+      return titleValid && genreValid && collectionValid;
+    }));
+  });
+
+  const sortMovieRatings = (movieRatings: MovieRating[]): MovieRating[] => {
     const sortedArr = [ ...movieRatings ];
 
-    switch (sort) {
+    switch (sort.value) {
       case 'none':
         return sortedArr;
       case 'date':
@@ -39,11 +72,15 @@ export const useMovieStore = defineStore('movies', () => {
     }
   };
 
+  const clearFilters = () => {
+    filters.value = {};
+  };
+
   const getMovieRatings = (
-    { filter='', force=false, sort='none' }: StoreGetterArgs
+    { force=false }: StoreGetterArgs
   ): Promise<MovieRating[]> => {
     if (!force && ratings.value.length > 0) {
-      return Promise.resolve(sortMovieRatings(filterMovieRatings(ratings.value, filter), sort));
+      return Promise.resolve(filteredMovieRatings.value);
     }
 
     loading.value = true;
@@ -53,7 +90,7 @@ export const useMovieStore = defineStore('movies', () => {
         avg: (mr.e + mr.s) / 2,
       }));
       loading.value = false;
-      return sortMovieRatings(filterMovieRatings(ratings.value, filter), sort);
+      return filteredMovieRatings.value;
     });
   };
 
@@ -74,5 +111,31 @@ export const useMovieStore = defineStore('movies', () => {
     });
   };
 
-  return { avgMovie, loading, ratings, report, getMovieRatings, getMovieStats };
+  const getMovieCollections = ({ force=false }: StoreGetterArgs): Promise<MovieCollection[]> => {
+    if (!force && collections.value.length > 0) {
+      return Promise.resolve(collections.value);
+    }
+
+    loading.value = true;
+    return getCollections().then((res:MovieCollection[]) => {
+      collections.value = res;
+      loading.value = false;
+      return res;
+    });
+  };
+
+  const getMovieGenres = ({ force=false }: StoreGetterArgs): Promise<MovieGenre[]> => {
+    if (!force && genres.value.length > 0) {
+      return Promise.resolve(genres.value);
+    }
+
+    loading.value = true;
+    return getGenres().then((res:MovieGenre[]) => {
+      genres.value = res;
+      loading.value = false;
+      return res;
+    });
+  };
+
+  return { avgMovie, collections, filteredMovieRatings, filters, genres, loading, ratings, report, sort, getMovieCollections, getMovieGenres, getMovieRatings, getMovieStats };
 });

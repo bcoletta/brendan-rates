@@ -2,25 +2,17 @@
 import BcLoader from '~/components/bc-design-system/bc-loader.vue';
 import MovieList from '~/components/movies/ratings/movie-list.vue';
 import MovieChart from '~/components/movies/ratings/movie-chart.vue';
+import MovieFilters from '~/components/movies/ratings/movie-filters.vue';
 import { useMovieStore } from '~/store/movies';
-import type { MovieRating } from '~/types';
 
 const $movies = useMovieStore();
-
-const movieRatings = ref<MovieRating[]>([]);
-const sort = ref<string>('date');
 
 const hasData = computed((): boolean => {
   return $movies.ratings.length > 0;
 });
 
-const getMovieData = (filter:string='') => {
-  $movies.getMovieRatings({ filter, sort: sort.value })
-      .then((res: MovieRating[]) => movieRatings.value = res);
-};
-
-const filter = (searchTerm:string) => {
-  getMovieData(searchTerm);
+const getMovieData = () => {
+  $movies.getMovieRatings({})
 };
 
 onMounted(getMovieData);
@@ -31,13 +23,18 @@ onMounted(getMovieData);
     <bc-loader />
   </div>
 
-  <div v-else-if="hasData" class="grid grid-cols-1 lg:grid-cols-3">
-    <div class="xl:max-h-[90vh] lg:col-span-2">
-      <movie-chart :ratings="movieRatings" />
+  <div v-else-if="hasData">
+    <movie-filters />
+
+    <div class="grid grid-cols-1 lg:grid-cols-3">
+      <div class="xl:max-h-[90vh] lg:col-span-2">
+        <movie-chart :ratings="$movies.filteredMovieRatings" />
+      </div>
+      <div class="lg:h-[90vh] overflow-y-auto">
+        <movie-list :ratings="$movies.filteredMovieRatings" />
+      </div>
     </div>
-    <div class="lg:h-[90vh] overflow-y-auto">
-      <movie-list :ratings="movieRatings" @search="filter" />
-    </div>
+
   </div>
 </template>
 

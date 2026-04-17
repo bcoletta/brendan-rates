@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Tab, TabList, TabListConfig } from "~/types";
+import type { Tab, TabList, TabListConfig } from "./types";
 
 const $emit = defineEmits([ 'select' ]);
 const { tabs } = defineProps({

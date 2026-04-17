@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import type { NotificationType } from "~/types";
+import type { NotificationType } from "./types";
 
 const $emit = defineEmits([ 'close' ]);
 const { notification } = defineProps({
@@ -9,8 +8,6 @@ const { notification } = defineProps({
     default: { message: '' },
   },
 });
-
-const $router = useRouter();
 
 const notificationClass = computed<string>(() => {
   let classStr = '';
@@ -23,10 +20,6 @@ const notificationClass = computed<string>(() => {
 });
 
 const onClick = () => {
-  if (notification.action?.route) {
-    $router.push(notification.action.route);
-  }
-
   $emit('close', notification.id);
 }
 </script>

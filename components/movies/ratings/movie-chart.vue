@@ -18,7 +18,7 @@ const points = computed<RatingPoint[]>(() => {
   ratings.forEach((rating:MovieRating) => {
     let newPt = {
       label: '',
-      titles: [ rating.title ],
+      titles: [ rating.title.trim() ],
       r: 5,
       x: rating.s,
       y: rating.e,
@@ -31,7 +31,9 @@ const points = computed<RatingPoint[]>(() => {
       newPt.label = newPt.titles.join('\n');
       pts.push(newPt);
     } else {
-      exPt.titles.push(newPt.titles[0]);
+      if (!exPt.titles.includes(rating.title)) {
+        exPt.titles.push(rating.title.trim());
+      }
       exPt.titles.sort((a,b) => a > b ? 1 : -1);
       const sizeIncrease: number = $utils.activeBreakpoint === 'xs' ? .1 : .5;
       exPt.r = 5 + ((exPt.titles.length - 1) * sizeIncrease);

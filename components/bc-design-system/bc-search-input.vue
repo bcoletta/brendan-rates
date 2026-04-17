@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { DropdownItem } from "~/types";
-import BcInput from "~/components/bc-design-system/bc-input.vue";
+import type { DropdownItem } from "./types";
+import BcInput from "./bc-input.vue";
 
 const emit = defineEmits([ 'select', 'select:value', 'update:search' ]);
 const props = defineProps({

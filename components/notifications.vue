@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import BcToast from "~/components/bc-design-system/bc-toast.vue";
 import { useNotificationStore } from "~/store/notifications";
+import { useRouter } from 'vue-router';
+import type { NotificationType } from '~/components/bc-design-system/types';
 
+const $router = useRouter();
 const $store = useNotificationStore();
 
 const closeToast = (id:number): void => {
+  const notification: NotificationType|undefined = $store.getNotification(id);
+
   $store.removeNotification(id);
+
+  if (notification?.action?.route) $router.push(notification.action.route);
 }
 </script>
 

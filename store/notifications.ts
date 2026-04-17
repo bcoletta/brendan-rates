@@ -1,4 +1,4 @@
-import type { NotificationType } from "~/types";
+import type { NotificationType } from "~/components/bc-design-system/types";
 
 export const useNotificationStore = defineStore('notifications', () => {
   const notifications = ref<NotificationType[]>([]);
@@ -20,6 +20,10 @@ export const useNotificationStore = defineStore('notifications', () => {
     setTimeout(() => removeNotification(notification.id || -1), timeout);
   }
 
+  function getNotification(id:number): NotificationType|undefined {
+    return notifications.value.find((ni:NotificationType) => ni.id === id);
+  }
+
   function removeNotification(id:number): void {
     let index: number = notifications.value.findIndex((ni:NotificationType) => ni.id === id);
     if (index > -1) {
@@ -27,5 +31,5 @@ export const useNotificationStore = defineStore('notifications', () => {
     }
   }
 
-  return { notifications, hasNotification, addNotification, removeNotification };
+  return { notifications, hasNotification, addNotification, getNotification, removeNotification };
 });

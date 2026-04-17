@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BcButton from "~/components/bc-design-system/bc-button.vue";
+import BcButton from "./bc-button.vue";
 
 const props = defineProps({
   disabled: Boolean,

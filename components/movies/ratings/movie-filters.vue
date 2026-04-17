@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useMovieStore } from '~/store/movies';
-import type { MovieCollection, MovieGenre, PropItem } from '~/types';
 import BcSelect from '~/components/bc-design-system/bc-select.vue';
+import { useMovieStore } from '~/store/movies';
+import type { PropItem } from '~/components/bc-design-system/types';
+import type { MovieCollection, MovieGenre } from '~/types';
 
 const $movies = useMovieStore();
 

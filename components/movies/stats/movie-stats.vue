@@ -9,7 +9,8 @@ import MoviesByYear from "~/components/movies/stats/movies-by-year.vue";
 import TopTen from "~/components/movies/stats/top-ten.vue";
 import { useMovieStore } from '~/store/movies';
 import { useUtilStore } from '~/store/utils';
-import type { MovieReportStats, PropItem } from '~/types';
+import type { PropItem } from '~/components/bc-design-system/types';
+import type { MovieReportStats } from '~/types';
 
 const $movies = useMovieStore();
 const $utils = useUtilStore();

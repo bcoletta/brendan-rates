@@ -15,5 +15,12 @@ export default defineNuxtConfig({
   lodash: {
     prefix: '_',
     upperAfterPrefix: false,
+  },
+  vite: {
+    optimizeDeps: {
+      include: [
+        'lodash', // CJS
+      ]
+    }
   }
 })

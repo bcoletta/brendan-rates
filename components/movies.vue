@@ -2,7 +2,7 @@
 import BcTabs from '~/components/bc-design-system/bc-tabs.vue';
 import Masthead from '~/components/masthead.vue';
 import MovieRatings from '~/components/movies/ratings/movie-ratings.vue';
-import type { Tab, TabList } from '~/types';
+import type { Tab, TabList } from '~/components/bc-design-system/types';
 import MovieStats from "~/components/movies/stats/movie-stats.vue";
 
 const tabs = ref<TabList>({
